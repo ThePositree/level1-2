@@ -78,6 +78,10 @@ img {
   border-style: none;
 }
 
+p {
+  margin: 0;
+}
+
 button,
 input,
 optgroup,
@@ -147,6 +151,7 @@ progress {
 
 textarea {
   overflow: auto;
+  outline: none;
 }
 
 [type="checkbox"],

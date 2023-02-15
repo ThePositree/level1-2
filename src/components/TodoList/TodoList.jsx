@@ -1,33 +1,44 @@
 import TodoItem from "../TodoItem/TodoItem";
 import styles from "./TodoList.module.scss";
+import { useDispatch } from "react-redux";
+import { searchTodo } from "../../reducers/todosReducer";
+import { useState, useEffect } from "react";
+import Input from "../../UI/Input/Input";
+import { AiOutlineSearch } from "react-icons/ai";
+const TodoList = ({ todoList, findedTodos }) => {
+  const dispath = useDispatch();
+  const [notFound, setNotFound] = useState(false);
+  const [valueInput, setValueInput] = useState("");
 
-const TodoList = ({ todoList, setTodoList }) => {
-  const changeChecked = (todo) => {
-    const arr = todoList.map((item) => {
-      if (item.id === todo.id) item.isCompleted = !item.isCompleted;
-      return item;
-    });
-    setTodoList(arr);
+  useEffect(() => {
+    if (!findedTodos.length && valueInput) {
+      setNotFound(true);
+    } else {
+      setNotFound(false);
+    }
+  }, [valueInput]);
+
+  const search = (e) => {
+    setValueInput(e.target.value);
+    dispath(searchTodo({ textTodo: e.target.value }));
   };
 
-  const removeTodo = (todo) => {
-    const arr = todoList.filter((item) => item.id !== todo.id);
-    setTodoList(arr);
-  };
-
-  const editTodo = ({ todo, newText }) => {
-    const arr = todoList.map((item) => {
-      if (item.id === todo.id) item.text = newText;
-      return item;
-    });
-    setTodoList(arr);
+  const render = () => {
+    if (notFound) return "Не найдено";
+    if (findedTodos.length) {
+      return findedTodos.map((todo) => <TodoItem todo={todo} key={todo.id} />);
+    } else {
+      return todoList.map((todo) => <TodoItem todo={todo} key={todo.id} />);
+    }
   };
 
   return (
     <ul className={styles.ul}>
-      {todoList.map((todo) => (
-        <TodoItem todo={todo} changeChecked={changeChecked} removeTodo={removeTodo} editTodo={editTodo} key={todo.id} />
-      ))}
+      <div className={styles.search}>
+        <Input style={{ maxWidth: "100%" }} onChange={search} value={valueInput} />
+        <AiOutlineSearch className={styles.icon} />
+      </div>
+      {render()}
     </ul>
   );
 };
