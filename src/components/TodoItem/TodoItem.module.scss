@@ -1,0 +1,29 @@
+@import "../../var.scss";
+.li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 5px;
+  background-color: $color2;
+  color: white;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.li + .li {
+  margin-top: 10px;
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+}
+
+.editInner {
+  width: 100%;
+}
+
+.form {
+  display: flex;
+  width: 100%;
+}
