@@ -6,6 +6,7 @@
 ***
 ## Стек:
   - React.js
+  - Redux/toolkit
   - SCSS
 ***
 ## Скрипты:
